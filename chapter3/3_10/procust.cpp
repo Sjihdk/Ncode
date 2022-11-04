@@ -37,12 +37,15 @@ void * customer(void * arg){
     {   
         pthread_mutex_lock(&mutex);//加锁
         //保存头结点指针
-        Node * temp = head;
-        head = head->next;
-        printf("del node,num:%d,tid:%ld\n",temp->num,pthread_self());
-        free(temp);
+        if(head!=NULL){
+            Node * temp = head;
+            head = head->next;
+            printf("del node,num:%d,tid:%ld\n",temp->num,pthread_self());
+            free(temp);
+            pthread_mutex_unlock(&mutex); //解锁
+            usleep(100);
+        }
         pthread_mutex_unlock(&mutex); //解锁
-        usleep(100);
     }
     return NULL;
 }
