@@ -57,7 +57,7 @@ int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 - addrlen : 第二个参数的内存大小
 - 返回值：成功 0， 失败 -1
 ssize_t write(int fd, const void *buf, size_t count); // 写数据
-ssize_t read(int fd, void *buf, size_t count); 
+ssize_t read(int fd, void *buf, size_t count);  //读数据
 
 
 */
