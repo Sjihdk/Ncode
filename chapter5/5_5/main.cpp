@@ -77,7 +77,7 @@ int main(int argc,char* argv[]){
     int epollfd = epoll_create(5);
 
     //将监听的文件描述符添加到epoll对象中
-    addfd(epollfd,listenfd,false);//不需要设置shot
+    addfd(epollfd,listenfd,false);//不需要设置epollshot
     http_conn::m_epollfd = epollfd; //所有http连接用到的同一个epoll对象
     
     while(1){
