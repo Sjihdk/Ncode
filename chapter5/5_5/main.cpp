@@ -103,10 +103,30 @@ int main(int argc,char* argv[]){
                 //将新的客户的数据初始化放入到数组中
                 users[connfd].init(connfd,client_address);
             }
-            else if()
+            else if(events[i].events & (EPOLLRDHUP | EPOLLHUP | EPOLLERR)) //对方异常断开或者错误等事件
+            {
+                users[sockfd].close_cone(); //关闭
+            }
+            else if(events[i].events & EPOLLIN){ //有读的数据
+                if(users[sockfd].read()){
+                    //一次性读完所有的数据
+                    pool->append(users + sockfd);
+                }
+                else{
+                    users[sockfd].close_cone(); //读失败了
+                }
+            }
+            else if(events[i].events & EPOLLOUT){ //有写的数据，一次性写完所有数据
+                if(!users[sockfd].write()){
+                    users[sockfd].close_cone(); 
+                }
+            }
         }
     }
-
+    close(epollfd);
+    close(listenfd);
+    delete [] users;
+    delete pool;
 
     return 0;
 }

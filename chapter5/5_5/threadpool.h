@@ -39,9 +39,10 @@ public:
     bool append(T* request);
 };
 
+//构造函数
 template<typename T>
-threadpool<T>::threadpool(int thread_number = 8,int max_requests = 10000):  m_thread_number=thread_number,
-    m_max_requests=max_requests,m_stop(false),m_threads(NULL){
+threadpool<T>::threadpool(int thread_number,int max_requests): m_thread_number(thread_number),
+    m_max_requests(max_requests),m_stop(false),m_threads(NULL){
         if((thread_number<=0)||(max_requests<=0)){
             throw std::exception();
         }
