@@ -105,7 +105,7 @@ int main(int argc,char* argv[]){
             }
             else if(events[i].events & (EPOLLRDHUP | EPOLLHUP | EPOLLERR)) //对方异常断开或者错误等事件
             {
-                users[sockfd].close_cone(); //关闭
+                users[sockfd].close_conn(); //关闭
             }
             else if(events[i].events & EPOLLIN){ //有读的数据
                 if(users[sockfd].read()){
@@ -113,12 +113,12 @@ int main(int argc,char* argv[]){
                     pool->append(users + sockfd);
                 }
                 else{
-                    users[sockfd].close_cone(); //读失败了
+                    users[sockfd].close_conn(); //读失败了
                 }
             }
             else if(events[i].events & EPOLLOUT){ //有写的数据，一次性写完所有数据
                 if(!users[sockfd].write()){
-                    users[sockfd].close_cone(); 
+                    users[sockfd].close_conn(); 
                 }
             }
         }
